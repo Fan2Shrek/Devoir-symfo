@@ -45,6 +45,21 @@ services:
       - mercure_config:/config
 ###< symfony/mercure-bundle ###
 
+  rabbitmq:
+    image: rabbitmq:3.12.4-management
+    ports:
+      - "15672:15672"
+
+  consumer1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: "php -d memory_limit=-1 bin/console messenger:consume async"
+
+
 volumes:
   db_data:
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Domain\NotifyNewPublicationCommand;
 use App\Entity\Commentary;
 use App\Entity\Publication;
 use App\Entity\Reaction;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
@@ -39,7 +41,7 @@ final class HomeController extends AbstractController
     }
 
     #[Route('/publish', name: 'app_publish')]
-    public function publish(Request $request): Response
+    public function publish(MessageBusInterface $bus, Request $request): Response
     {
         $form = $this->createForm(PublicationFormType::class);
 
@@ -50,6 +52,8 @@ final class HomeController extends AbstractController
 
             $this->entityManager->persist($publication);
             $this->entityManager->flush();
+
+            $bus->dispatch(new NotifyNewPublicationCommand($publication));
 
             return $this->redirectToRoute('home');
         }
@@ -77,6 +81,7 @@ final class HomeController extends AbstractController
         if (null === $publication) {
             throw $this->createNotFoundException();
         }
+
 
         return $this->render('home/publication_details.html.twig', [
             'publication' => $publication,

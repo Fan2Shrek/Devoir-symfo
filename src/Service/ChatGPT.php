@@ -28,7 +28,7 @@ final class ChatGPT
                 'messages' => [
                     [
                         'role' => 'user',
-                        'content' => "Voici un prompt, réponds comme si tu étais homer simpons en une dizaine de mots: $prompt",
+                        'content' => "Voici un prompt, réponds comme si tu étais homer simpsons en une dizaine de mots: $prompt",
                     ],
                 ],
             ],
