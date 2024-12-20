@@ -1,0 +1,11 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="flex justify-center items-center flex-col my-2">
+        <h1>Publiez quelque chose</h1>
+        {{ form_start(form) }}
+            {{ form_widget(form.content, {'attr': {'class': 'border border-solid border-black'}}) }}
+            {{ form_widget(form.tags, {'attr': {'class': 'border border-solid border-black'}}) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

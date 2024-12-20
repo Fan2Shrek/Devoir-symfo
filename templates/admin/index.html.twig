@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="">
+        <div class="flex flex-col justify-center items-center my-6 gap-4">
+            <h2>Site de ouf</h2>
+            {% include "components/btn.html.twig" with {'href': path('app_user_index'), 'text': 'Utilisateurs'} %}
+            {% include "components/btn.html.twig" with {'href': path('app_publication_index'), 'text': 'Posts'} %}
+            {% include "components/btn.html.twig" with {'href': path('app_tag_index'), 'text': 'Tags'} %}
+            {% include "components/btn.html.twig" with {'href': path('app_commentary_index'), 'text': 'Commentaires'} %}
+        </div>
+    </div<
+{% endblock %}

@@ -1,0 +1,8 @@
+services:
+  db:
+    networks:
+      - pma
+
+networks:
+    pma:
+        external: true

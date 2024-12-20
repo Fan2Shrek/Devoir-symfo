@@ -1,0 +1,10 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="flex justify-center items-center flex-col my-2">
+        <h1>Ajouter un commentaire<h1>
+        {{ form_start(form) }}
+            {{ form_widget(form.content, {'attr': {'class': 'border border-solid border-black'}}) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

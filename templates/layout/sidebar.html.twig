@@ -1,0 +1,30 @@
+<div class="border border-solid h-screen">
+    <div class="flex flex-col justify-center items-center">
+        {% if app.user %}
+            <h2>Salut, {{ app.user.username }}</h2>
+            {% include "components/btn.html.twig" with {'href': path('app_logout'), 'text': 'Déconnexion'} %}
+        {% else %}
+            {% include "components/btn.html.twig" with {'href': path('app_login'), 'text': 'Connexion'} %}
+        {% endif %}
+    </div>
+
+    <div class="flex flex-col justify-center items-center my-6 gap-4">
+        <h2>Site de ouf</h2>
+        {% if is_granted('ROLE_USER') %}
+            {% include "components/btn.html.twig" with {'href': path('app_publish'), 'text': 'Dites quelque chose'} %}
+        {% endif %}
+        {% include "components/btn.html.twig" with {'href': path('home'), 'text': 'Fil'} %}
+    <div>
+
+
+    {% if is_granted('ROLE_USER') %}
+        <div class="flex flex-col justify-center items-center my-6 gap-4">
+            <h2>Moi</h2>
+            {% if is_granted('ROLE_ADMIN') %}
+                    {% include "components/btn.html.twig" with {'href': path('app_admin'), 'text': 'Admin'} %}
+            {% endif %}
+
+            {% include "components/btn.html.twig" with {'href': path('app_me'), 'text': 'Profile'} %}
+        <div>
+    {% endif %}
+</div>

@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mariadb:10.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - default
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    working_dir: /app
+    volumes:
+      - .:/app
+
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"
+
+volumes:
+  db_data:

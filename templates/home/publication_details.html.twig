@@ -1,0 +1,25 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    {% include "components/publication.html.twig" with {publication} only %}
+    <div class="">
+        <h2>Commentaires</h2>
+        {% for comment in publication.commentaries %}
+            <div class="border border-solid border-blue w-2/3 my-4 p-2 ">
+                <div class="my-1 flex gap-2 justify-between my-3">
+                    <p>{{ comment.author.username }}</p>
+                </div>
+                <p>{{ comment.content }}</p>
+                <div>
+                    {% for reaction in comment.reactions %}
+                        {{ reaction.emoji }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="flex justify-center">
+        {% include "components/btn.html.twig" with {'href': path('app_publication_comment', { 'id': publication.id }), 'text': 'Commenter'} %}
+        {% include "components/btn.html.twig" with {'href': path('home'), 'text': 'Retour'} %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% for emoji, count in emojis %}
+    <div class="emoji" data-emoji="{{ emoji }}">{{ emoji }}({{ count }})</div>
+{% endfor %}
+
+<script>
+    const emojis = document.querySelectorAll('.emoji');
+    emojis.forEach(emoji => {
+        emoji.addEventListener('click', (e) => {
+            e.preventDefault();
+            addEmoji(e);
+        });
+    });
+
+    const addEmoji = (event) => {
+        const emoji = event.target.dataset.emoji;
+        fetch('{{ path('app_add_reaction') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                emoji: emoji,
+                class: "{{ class|replace({"\\": "\\\\"})}}",
+                id: "{{ id }}"
+            })
+        })
+    }
+</script>

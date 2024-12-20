@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <div class="flex justify-center items-center flex-col my-2">
+        <h1>Connectez-vous</h1>
+        <form method="post" class="flex justify-center items-center flex-col border border-solid border-black p-4 rounded">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <label for="username">Username</label>
+            <input type="text" value="{{ last_username }}" name="_username" id="username" class="border border-solid border-black" autocomplete="username" required autofocus>
+            <label for="password">Password</label>
+            <input type="password" name="_password" id="password" class="border border-solid border-black" autocomplete="current-password" required>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
+
+                <div class="checkbox mb-3">
+                    <input type="checkbox" name="_remember_me" id="_remember_me">
+                    <label for="_remember_me">Remember me</label>
+                </div>
+            #}
+
+            <button class="border border-solid border-blue p-2 mt-2" type="submit">
+                Je me connecte
+            </button>
+        </form>
+        <div class="mt-2">
+            {% include "components/btn.html.twig" with {'href': path('app_forgot_password_request'), 'text': 'MDP oublié ?'} %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="flex justify-center flex-col items-center">
+        {% for publication in publications %}
+            {% include "components/publication.html.twig" with { publication } only %}
+        {% endfor %}
+    </div>
+{% endblock %}
