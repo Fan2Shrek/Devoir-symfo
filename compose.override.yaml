@@ -3,6 +3,12 @@ services:
     networks:
       - pma
 
+###> symfony/mercure-bundle ###
+  mercure:
+    ports:
+      - "80"
+###< symfony/mercure-bundle ###
+
 networks:
     pma:
         external: true

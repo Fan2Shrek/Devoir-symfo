@@ -1,4 +1,4 @@
-<div class="border border-solid border-blue w-2/3 my-4 p-2 ">
+<div id="publication-{{publication.id}}" class="border border-solid border-blue w-2/3 my-4 p-2" {{turbo_stream_listen('publication-'~publication.id) }}>
     {% if app.request.attributes.get('_route') != "app_publication_details" %}
         <a href="{{ path('app_publication_details', {'id': publication.id}) }}">
     {% endif %}

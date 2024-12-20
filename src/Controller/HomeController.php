@@ -16,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
@@ -23,6 +25,7 @@ final class HomeController extends AbstractController
     public function __construct(
         private PublicationRepository $publicationRepository,
         private EntityManagerInterface $entityManager,
+        private HubInterface $hub,
     ) {
     }
 
@@ -120,6 +123,25 @@ final class HomeController extends AbstractController
 
         $this->entityManager->persist($reaction);
         $this->entityManager->flush();
+
+        if (Commentary::class === $class) {
+            $commentary = $reaction->getCommentary();
+            $this->hub->publish(new Update(
+                "commentary-$id",
+                $this->renderView('component/turbo/commentary.html.twig', [
+                    'commentary' => $commentary,
+                ])
+            ));
+
+            return new JsonResponse();
+        }
+
+        $this->hub->publish(new Update(
+            "publication-$id",
+            $this->renderView('components/turbo/reaction.html.twig', [
+                'publication' => $reaction->getPublication(),
+            ])
+        ));
 
         return new JsonResponse();
     }

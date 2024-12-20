@@ -1,0 +1,5 @@
+<turbo-stream action="replace" targets="#publication-{{ publication.id }}">
+    <template>
+        {% include "components/publication.html.twig" with {publication} only %}
+    </template>
+</turbo-stream>

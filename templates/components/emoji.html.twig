@@ -1,17 +1,25 @@
 {% for emoji, count in emojis %}
-    <div class="emoji" data-emoji="{{ emoji }}">{{ emoji }}({{ count }})</div>
+    <div class="emoji-{{id}}" data-emoji="{{ emoji }}">{{ emoji }}({{ count }})</div>
 {% endfor %}
 
 <script>
-    const emojis = document.querySelectorAll('.emoji');
-    emojis.forEach(emoji => {
+    if (typeof emojis{{id}} === 'undefined') {
+        let emojis{{id}};
+    }
+
+    if (typeof addEmoji{{id}} === 'undefined') {
+        let addEmoji{{id}};
+    }
+
+    emojis{{id}} = document.querySelectorAll('.emoji-{{id}}');
+    emojis{{id}}.forEach(emoji => {
         emoji.addEventListener('click', (e) => {
             e.preventDefault();
-            addEmoji(e);
+            addEmoji{{id}}(e);
         });
     });
 
-    const addEmoji = (event) => {
+    addEmoji{{id}} = (event) => {
         const emoji = event.target.dataset.emoji;
         fetch('{{ path('app_add_reaction') }}', {
             method: 'POST',
@@ -25,4 +33,5 @@
             })
         })
     }
+    // A mettre dans le top 10 des pires trucs que j'ai fait
 </script>
