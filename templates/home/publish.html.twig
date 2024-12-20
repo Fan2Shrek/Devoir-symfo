@@ -7,5 +7,22 @@
             {{ form_widget(form.content, {'attr': {'class': 'border border-solid border-black'}}) }}
             {{ form_widget(form.tags, {'attr': {'class': 'border border-solid border-black'}}) }}
         {{ form_end(form) }}
+        <a id="generate">Générer un texte aléatoire</a>
+        <input class="border border-black border-solid" name="post_content" id="post_content" />
     </div>
+    <script>
+        const button = document.querySelector('#generate');
+        const input = document.querySelector('#post_content');
+        const post_content = document.querySelector('#publication_form_content');
+
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            fetch('{{ path('app_publish_help') }}', { method: 'POST', body: JSON.stringify({ prompt: input.value ?? "fornite" }) })
+                .then(response => response.json()
+                .then(data => {
+                    post_content.value = data.content;
+                })
+            );
+        });
+    </script>
 {% endblock %}

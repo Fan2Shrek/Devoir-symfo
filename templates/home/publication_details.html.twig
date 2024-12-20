@@ -22,4 +22,5 @@
         {% include "components/btn.html.twig" with {'href': path('app_publication_comment', { 'id': publication.id }), 'text': 'Commenter'} %}
         {% include "components/btn.html.twig" with {'href': path('home'), 'text': 'Retour'} %}
     </div>
+    <div {{turbo_stream_listen('publication-'~publication.id) }}></div>
 {% endblock %}

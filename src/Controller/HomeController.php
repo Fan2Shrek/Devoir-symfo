@@ -10,6 +10,7 @@ use App\Entity\Reaction;
 use App\Form\CommentaryType;
 use App\Form\PublicationFormType;
 use App\Repository\PublicationRepository;
+use App\Service\ChatGPT;
 use App\Twig\AppRuntime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,6 +57,18 @@ final class HomeController extends AbstractController
         return $this->render('home/publish.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/publish_help', name: 'app_publish_help', methods: ['POST'])]
+    public function help(Request $request, ChatGPT $goat): Response
+    {
+        $prompt = $request->getPayload()->get('prompt');
+
+        return new JsonResponse([
+            'content' => $goat->generate($prompt),
+        ]);
+
+        return $this->render('home/publish_help.html.twig');
     }
 
     #[Route('/publication/{id}', name: 'app_publication_details')]

@@ -20,4 +20,4 @@ et on croise les doigts
 
 ## Infos
 
-Mercure est utilisé pour les réactions
+Mercure est utilisé pour les réactions (aidé par symfony UX qu'on aime tant :p)

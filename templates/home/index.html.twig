@@ -4,6 +4,7 @@
     <div class="flex justify-center flex-col items-center">
         {% for publication in publications %}
             {% include "components/publication.html.twig" with { publication } only %}
+            <div {{turbo_stream_listen('publication-'~publication.id) }}></div>
         {% endfor %}
     </div>
 {% endblock %}
